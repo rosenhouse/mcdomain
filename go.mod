@@ -7,6 +7,7 @@ require (
 	github.com/coreos/go-etcd v2.0.0+incompatible // indirect
 	github.com/cpuguy83/go-md2man v1.0.10 // indirect
 	github.com/docker/docker v0.7.3-0.20190327010347-be7ac8be2ae0 // indirect
+	github.com/go-logr/logr v0.3.0 // indirect
 	github.com/go-openapi/validate v0.19.5 // indirect
 	github.com/gophercloud/gophercloud v0.1.0 // indirect
 	github.com/ugorji/go/codec v0.0.0-20181204163529-d75b2dcb6bc8 // indirect
