@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: red-team
+---
+apiVersion: fun.xcc/v1alpha1
+kind: DomainOwner
+metadata:
+  name: domainowner-sample
+  namespace: red-team
+spec:
+  domain: red-team.apps.tanzu
+  owners:
+    matchLabels:
+      tenant: veggies
+---
+apiVersion: cluster.x-k8s.io/v1alpha3
+kind: Cluster
+metadata:
+  name: pepper
+  namespace: red-team
+  labels:
+    tenant: veggies
+spec: {}
+---
+apiVersion: cluster.x-k8s.io/v1alpha3
+kind: Cluster
+metadata:
+  name: tomato
+  namespace: red-team
+  labels:
+    tenant: veggies
+spec: {}
+---
+apiVersion: cluster.x-k8s.io/v1alpha3
+kind: Cluster
+metadata:
+  name: strawberry
+  namespace: red-team
+  labels:
+    tenant: fruits
+spec: {}
+---
+apiVersion: cluster.x-k8s.io/v1alpha3
+kind: Cluster
+metadata:
+  name: raspberry
+  namespace: red-team
+  labels:
+    tenant: fruits
+spec: {}
+---
+apiVersion: cluster.x-k8s.io/v1alpha3
+kind: Cluster
+metadata:
+  name: radish
+  namespace: red-team
+  labels:
+    tenant: veggies
+spec: {}

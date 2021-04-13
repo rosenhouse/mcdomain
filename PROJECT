@@ -1,3 +1,7 @@
 domain: xcc
 repo: github.com/rosenhouse/mcdomain
+resources:
+- group: fun
+  kind: DomainOwner
+  version: v1alpha1
 version: "2"

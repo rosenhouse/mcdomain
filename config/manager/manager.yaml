@@ -2,33 +2,90 @@ apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    control-plane: controller-manager
-  name: system
+    app: mcdomain
+  name: mcdomain
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: mcdomain-manager-role
+  labels:
+    app: mcdomain
+rules:
+- apiGroups:
+  - fun.xcc
+  resources:
+  - domainowners
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - fun.xcc
+  resources:
+  - domainowners/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - cluster.x-k8s.io
+  resources:
+  - clusters
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - discovery.k8s.io
+  resources:
+  - endpointslices
+  verbs:
+  - create
+  - update
+  - delete
+  - get
+  - list
+  - watch
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: mcdomain-manager-rolebinding
+  labels:
+    app: mcdomain
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: mcdomain-manager-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: mcdomain
+
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: controller-manager
-  namespace: system
+  name: mcdomain
+  namespace: mcdomain
   labels:
-    control-plane: controller-manager
+    app: mcdomain
 spec:
   selector:
     matchLabels:
-      control-plane: controller-manager
+      app: mcdomain
   replicas: 1
   template:
     metadata:
       labels:
-        control-plane: controller-manager
+        app: mcdomain
     spec:
       containers:
-      - command:
-        - /manager
-        args:
-        - --enable-leader-election
-        image: controller:latest
-        name: manager
+      - name: manager
+        image: ko://github.com/rosenhouse/mcdomain
         resources:
           limits:
             cpu: 100m
